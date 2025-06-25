@@ -224,10 +224,88 @@ Sample Test Case:
 | -------- | ------------ | ------------------------ |
 | TC-PAY-1 | Expired card | Declined with error code |
 
-## 10. Maintenance
+## 10. Maintenance and Support
 
-- Hotfix Strategy: Feature toggles managed through Azure App Configuration
-- API Deprecation: Versions retired after 12 months
+### 10.1 System Maintenance Strategy
+
+Planned Maintenance Windows:
+
+- Monthly Patches: 2nd Saturday of each month (02:00-04:00 UTC)
+- Emergency Fixes: Hot-patch capability via Azure DevOps pipelines
+
+Versioning Policy:
+
+```text
+API Version Format: v{MAJOR}.{MINOR}.{PATCH}
+- MAJOR: Breaking changes (annual max)
+- MINOR: Backward-compatible features (quarterly)
+- PATCH: Bug fixes (as needed)
+```
+
+### 10.2 Update Procedures
+
+#### 10.2.1 Zero-Downtime Deployments
+
+1. Blue-Green Deployment:
+   ```mermaid
+   flowchart LR
+       A[Live v1.2] -->|Traffic Shift| B[New v1.3]
+       B -->|Validation| C[Rollback if errors]
+   ```
+2. Database Migrations:
+   - Flyway for schema changes
+   - Critical data: Dual-write during transition
+
+#### 10.2.2 Dependency Updates
+
+| Component      | Update Frequency | Verification Method         |
+| -------------- | ---------------- | --------------------------- |
+| Azure Services | Auto-patched     | Azure Health Dashboard      |
+| NPM Packages   | Weekly           | Snyk/Dependabot scans       |
+| Stripe API     | Quarterly        | Sandbox compatibility tests |
+
+### 10.3 Troubleshooting Guide
+
+Common Issues Matrix:
+
+| Symptom                      | Root Cause                  | Resolution Steps                                                      |
+| ---------------------------- | --------------------------- | --------------------------------------------------------------------- |
+| Cart items disappearing      | Redis cache eviction        | 1. Check cache memory metrics<br>2. Adjust Redis persistence settings |
+| Payment failures (Error 402) | Stripe API version mismatch | 1. Verify API version in config<br>2. Update Stripe.NET library       |
+| Slow product searches        | CosmosDB RU exhaustion      | 1. Scale RU allocation<br>2. Add composite indexes                    |
+
+Logging Standards:
+
+```json
+// Sample structured log entry
+{
+  "timestamp": "2025-07-15T14:32:45Z",
+  "service": "CartService",
+  "correlationId": "cid-789abc",
+  "severity": "ERROR",
+  "message": "Inventory reservation failed",
+  "context": {
+    "cartId": "cart_XYZ123",
+    "missingSku": "PROD-888"
+  }
+}
+```
+
+### 10.4 Support Model
+
+Tiered Support Structure:
+
+| Tier | Response SLA | Channel         | Escalation Path     |
+| ---- | ------------ | --------------- | ------------------- |
+| L1   | <1 hour      | Helpdesk portal | L2 Support Engineer |
+| L2   | <15 minutes  | Teams/Slack     | Development Lead    |
+| L3   | Immediate    | PagerDuty       | Architect/CTO       |
+
+Monitoring Tools:
+
+- Application: Azure Application Insights
+- Infrastructure: Prometheus + Grafana
+- Business: Power BI dashboards
 
 ## Appendices
 
