@@ -1,0 +1,90 @@
+site_name: "Software Project Documentation"
+#site_url: https://andikatjacobdennis.github.io/SoftwareProjectDocumentation/
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - search.suggest
+    - search.reset
+    - search.share
+    - toc.integrate
+    - toc.follow
+    - toc.expand
+    - navigation.top
+    - navigation.footer
+    - content.code.annotate
+    - content.tabs.link
+    - content.action.edit
+    - content.layout.wide
+  palette:
+    - scheme: default  # Light theme (default)
+      primary: violet
+      accent: violet
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - scheme: slate  # Dark theme
+      primary: violet
+      accent: violet
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Fira Code
+extra:
+  search:
+    language: en
+    pipeline: stemmer, stopword
+    separator: '[\s\-]'
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/andikatjacobdennis/T-SQL
+markdown_extensions:
+  - pymdownx.highlight:
+      linenums: true
+      anchor_linenums: true
+      use_pygments: true
+      pygments_style: vs  # Use Visual Studio Code highlighting
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.extra
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Technical:
+      - 001. SRS Template: 001_SRS_Template.md
+      - 002. SRS Example: 001_SRS_Shopping_Cart_System.md
+plugins:
+  - search:
+      lang: en
+      separator: '[\s\-]'
+  - tags
+  - minify:
+      minify_html: true
+  #- with-pdf
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+copyright: "&copy;2025. All rights reserved."
