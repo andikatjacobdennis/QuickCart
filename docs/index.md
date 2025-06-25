@@ -4,7 +4,7 @@
 
 ### Technical
 
-- [001. SRS Template](001_SRS_Template.md)
-- [002. SRS Example](001_SRS_Shopping_Cart_System.md)
+- [SRS](SRS.md)
+- [SDS](SDS.md)
 - [Deployment Topology](DeploymentTopology.md)
 - [Skill Matrix](SkillMatrix.md)
